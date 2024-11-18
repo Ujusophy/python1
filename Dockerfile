@@ -1,10 +1,5 @@
 FROM python:3.11-slim-buster
 
-WORKDIR /app
-
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-
 COPY . .
 
-CMD ["python", "task.py", "file.csv", "greetings"]
+CMD ["python", "your_script.py", "file.csv", "greetings"]
