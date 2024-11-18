@@ -1,0 +1,31 @@
+name: Build and Run Docker
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t xmas-message:latest .
+          
+      - name: Display Docker image size
+        run: |
+          IMAGE_SIZE=$(docker images xmas-message:latest --format "{{.Size}}")
+          echo "Docker Image Size: $IMAGE_SIZE"
+
+      - name: Run Docker container
+        run: |
+          docker run --rm -d --name xmas-message-container xmas-message:latest
+
+      - name: Stop and clean up
+        run: |
+          docker stop xmas-messagep-container || true
+          docker rm xmas-message-container || true
